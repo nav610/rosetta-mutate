@@ -1,10 +1,16 @@
 from pyrosetta import *
 from pyrosetta.toolbox import mutate_residue
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("-pdb","--pdb",help="pdb") 
+args = parser.parse_args() 
+
 init()
 
 aa_long = ['ALA', 'ARG', 'ASN', 'ASP', 'CYS', 'GLN', 'GLU', 'GLY', 'HIS', 'ILE', 'LEU', 'LYS', 'MET', 'PHE', 'PRO', 'SER', 'THR', 'TRP', 'TYR', 'VAL']
 aa_short = {'ALA' : 'A', 'ARG' : 'R', 'ASN' : 'N', 'ASP' : 'D', 'CYS' : 'C', 'GLN' : 'Q', 'GLU' : 'E', 'GLY' : 'G', 'HIS' : 'H','HIS_D' : 'H', 'ILE' : 'I', 'LEU' : 'L', 'LYS' : 'K', 'MET' : 'M', 'PHE' : 'F', 'PRO' : 'P', 'SER' : 'S', 'THR' : 'T', 'TRP' : 'W', 'TYR' : 'Y', 'VAL' : 'V'}
-chains = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+#chains = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+chains = ['B']
 
 f = open("surface.txt",'r')
 res_list = [int(i) for i in f.readlines()]
@@ -12,7 +18,7 @@ f.close()
 
 f = open("energies.txt",'w')
 
-pose_org = pose_from_pdb("nlrp6_symm.pdb")
+pose_org = pose_from_pdb(args.pdb)
 scorefx = get_fa_scorefxn()
 f.write("org {}\n".format(scorefx(pose_org)))
 errorlist = []
