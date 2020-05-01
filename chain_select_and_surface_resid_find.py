@@ -1,9 +1,14 @@
 from pyrosetta import *
+import argparse
 init()
+
+parser = argparse.ArgumentParser() 
+parser.add_argument("-pdb","--pdb",help = "pdb") 
+args = parser.parse_args() 
 
 sasa=pyrosetta.rosetta.core.scoring.sasa.SasaCalc()
 
-pose = pose_from_pdb("nlrp6_symm_chainA.pdb")
+pose = pose_from_pdb(args.pdb)
 sasa.calculate(pose)
 sasa_residue = list(sasa.get_residue_sasa())
 
